@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Zsombor Nagy — Portfolio</title>
+<style>
+:root{
+  --orange:#e94322;
+  --orange-deep:#dd3d1d;
+  --bg-dark:#0f0f0f;
+  --muted:#bfbfbf;
+  --card-radius:18px;
+  --max-width:1280px;
+  --badge-bright:rgba(255,255,255,0.12);
+  --badge-text:#ffffff;
+  --ease: cubic-bezier(.2,.9,.28,1);
+
+  /* hero title size variable (used for title font and aligning photo & socials) */
+  --hero-title-size: clamp(40px,7vw,72px);
+  /* scale to make single-row visually match previous two-row height */
+  --hero-single-scale: 1.9;
+}
+
+/* FONTS */
+@font-face{font-family:"Akira Extended User";src:local("Akira Extended"),local("AkiraExtended");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Satoshi User";src:local("Satoshi"),local("Satoshi Variable"),local("Satoshi-Regular");font-weight:300 800;font-style:normal;font-display:swap;}
+
+/* BASE */
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--bg-dark);
+  color:#e6e6e6;
+  font-family:"Satoshi User",Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+  line-height:1.2;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* HERO - HALF HEIGHT */
+.hero{
+  background:var(--orange);
+  min-height:36vh;
+  display:flex;
+  align-items:center;
+  padding:clamp(18px,4vw,306px) clamp(18px,6vw,906px);
+}
+.hero-inner{
+  width:100%;
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding-top:0;
+  display:flex;
+  gap:20px;
+  align-items:flex-start; /* align top of title & photo */
+  justify-content:space-between;
+}
+.hero-left{
+  display:flex;
+  align-items:flex-start; /* top alignment */
+  gap:18px;
+}
+
+/* Photo sized to match the scaled title height exactly (so top aligns with title top) */
+/* Photo scaled and aligned so top = title top and bottom = See Work button bottom */
+/* Hero photo scaled so its bottom aligns with See Work button bottom */
+/* Hero photo scaled up and moved slightly down for visual balance */
+/* Hero photo scaled up more and moved further down */
+/* Hero photo scaled up further and moved slightly lower */
+/* Hero photo scaled up and vertically centered with title and CTA */
+/* Hero photo scaled up slightly more and centered */
+/* Hero photo container stays same size; image scaled up inside by 105% */
+/* Hero photo scaled up as a whole by 102% */
+.hero-photo{
+  width:calc(var(--hero-title-size) * var(--hero-single-scale) * 1.38);
+  height:calc(var(--hero-title-size) * var(--hero-single-scale) * 1.38);
+
+  border-radius:14px;
+  background:#111;
+  background-size:105%; /* still zoomed inside */
+  background-position:center 34%;
+  background-repeat:no-repeat;
+
+  flex:0 0 calc(var(--hero-title-size) * var(--hero-single-scale) * 1.38);
+
+  box-shadow:0 10px 28px rgba(0,0,0,0.45);
+  border:3px solid rgba(255,255,255,0.06);
+  overflow:hidden;
+
+  /* scale entire container up slightly and keep it vertically centered */
+  transform:scale(1.02) translate(-14px, 10px);
+  transform-origin:center;
+  transform: translateX(90px); /* move title slightly to the right */
+}
+
+
+
+
+
+/* Responsive tweaks */
+@media (max-width:900px){
+  .hero-inner{flex-direction:column;align-items:center;text-align:center;gap:12px;}
+  .hero-left{flex-direction:column;align-items:center;gap:12px;}
+  .hero-right{margin-top:6px;position:relative;top:auto;right:auto;align-items:center;}
+.hero-photo{
+  width:calc(var(--hero-title-size) * 1.2 * 1.38);
+  height:calc(var(--hero-title-size) * 1.2 * 1.38);
+  flex:0 0 calc(var(--hero-title-size) * 1.2 * 1.38);
+
+  background-size:105%;
+  background-position:center 34%;
+
+  transform:scale(1.02) translateY(10px);
+  transform-origin:center;
+}
+
+
+
+  .hero-title{font-size:calc(var(--hero-title-size) * 1.2);white-space:normal;text-align:center;}
+  .social-column{height:calc(var(--hero-title-size) * 1.2);flex-direction:row;gap:12px;justify-content:center;}
+}
+
+/* Title uses variable and is forced single row */
+.hero-title {
+  margin: 0;
+  font-family: "Akira Extended User", "Impact", sans-serif;
+  font-weight: 800;
+  color: #0b0b0b;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  font-size: calc(var(--hero-title-size) * var(--hero-single-scale));
+  text-transform: uppercase;
+  white-space: nowrap; /* force single line */
+  display: block;
+  transform: translateX(100px); /* move title slightly to the right */
+}
+
+
+/* credits */
+.hero-meta{color:rgba(11,11,11,0.48);font-size:13px;max-width:640px;font-weight:600;margin-top:6px;
+  transform: translateX(98px); /* move title slightly to the right */
+}
+
+/* socials: stacked vertically, evenly distributed to match title top/bottom */
+.hero-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.social-column{
+  display:flex;
+  flex-direction:column;
+  gap:10px; /* halfway between 12px and 8px */
+  justify-content:center;
+  height:calc(var(--hero-title-size) * var(--hero-single-scale) * 0.95); /* small reduction for balance */
+  flex:0 0 auto;
+  margin-top:0;
+
+}
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:10px;
+  background:rgba(0,0,0,0.06);border:1px solid rgba(255,255,255,0.06);cursor:pointer;text-decoration:none;color:#0b0b0b;
+  transition:transform .14s var(--ease),box-shadow .14s var(--ease),background .14s var(--ease);
+}
+.icon-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  background:rgba(0,0,0,0.06);
+  border:1px solid rgba(255,255,255,0.06);
+  cursor:pointer;
+  text-decoration:none;
+  color:#0b0b0b;
+  transition:transform .14s var(--ease), box-shadow .14s var(--ease), background .14s var(--ease);
+
+}
+
+.icon-btn img {
+  width:16px;
+  height:16px;
+}
+
+.icon-btn img {
+  width:15px;
+  height:15px;
+}
+
+/* CTA */
+.hero-cta{display:flex;gap:16px;align-items:center;margin-top:8px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:22px;font-weight:700;text-decoration:none;font-size:13px;box-shadow:0 6px 18px rgba(11,11,11,0.35);transition:transform .16s,box-shadow .16s,color .16s;cursor:pointer;color:#fff;border:0;}
+.btn-primary{background:linear-gradient(180deg,rgba(0,0,0,0.78),rgba(0,0,0,0.88));color:#f4f4f4;border:1px solid rgba(255,255,255,0.03);padding:10px 20px;
+  transform: translateX(98px); /* move title slightly to the right */
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(11,11,11,0.6);
+  transform: translateX(98px); /* move title slightly to the right */
+}
+.btn-secondary {
+  background: rgba(11, 11, 11, 0.06);
+  color: rgba(11, 11, 11, 0.86);
+  border: 1px solid rgba(11, 11, 11, 0.06);
+  transition: transform .16s, box-shadow .16s, background .16s, color .16s;
+  transform: translateX(98px); /* move title slightly to the right */
+
+}
+
+.btn-secondary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 34px rgba(11, 11, 11, 0.6);
+  background: rgba(11, 11, 11, 0.06);
+  color: rgba(11, 11, 11, 0.86);
+}
+
+/* SELECTOR (pill + slider) */
+.work-selector-wrap{display:flex;justify-content:center;align-items:center;padding:18px 0;}
+.work-selector{
+  position:relative;
+  display:flex;
+  gap:20px;
+  align-items:center;
+  background:rgba(255,255,255,0.06);
+  padding:6px;
+  border-radius:999px;
+  border:2px solid rgba(255,255,255,0.06);
+  width:min(1100px,92%);
+  overflow:visible;
+  box-shadow:0 6px 18px rgba(0,0,0,0.45);
+}
+.sel-btn{
+  position:relative;
+  background:transparent;
+  color:#f7f7f7;
+  border:0;
+  padding:16px 26px;
+  font-weight:700;
+  font-size:18px;
+  letter-spacing:0.6px;
+  cursor:pointer;
+  border-radius:999px;
+  z-index:2;
+  transition:color .18s var(--ease),transform .22s var(--ease);
+}
+.slider{
+  position:absolute;
+  left:6px;
+  top:6px;
+  bottom:6px;
+  width:0;
+  background:linear-gradient(90deg,var(--orange) 0%, #eb5b39 100%);
+  border-radius:999px;
+  z-index:1;
+  transition:transform .28s var(--ease),width .28s var(--ease);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.45), inset 0 -8px 18px rgba(255,255,255,0.04);
+}
+.sel-btn.active{color:#0b0b0b;}
+
+/* PROJECTS */
+.projects{
+  padding:clamp(28px,5vw,64px) clamp(18px,6vw,96px);
+  color:#e6e6e6;background:var(--bg-dark);
+}
+.projects-inner{max-width:var(--max-width);margin:0 auto;}
+.projects-title{color:var(--orange);font-family:"Satoshi User";font-weight:700;font-size:clamp(26px,3.6vw,36px);margin-bottom:8px;text-align:center;}
+
+/* grid: max 3 per row */
+.project-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  align-items:stretch;
+  margin-top:20px;
+}
+@media (max-width:1000px){ .project-grid{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:620px){ .project-grid{grid-template-columns:repeat(1,1fr);} }
+
+/* project card */
+.project-card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:18px;
+  padding:12px;
+  transition:transform .26s var(--ease),box-shadow .26s var(--ease),opacity .18s var(--ease);
+  transform-origin:center;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  min-height:120px;
+}
+.project-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 18px 44px rgba(0,0,0,0.6);}
+
+.project-poster{
+  width:150px;
+  height:220px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.04);
+  background-size:cover;
+  background-position:center;
+  flex:0 0 150px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.55);
+}
+
+.project-info{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between; /* state sits at bottom */
+  min-height:220px;
+}
+
+.project-title{font-family:"Satoshi User";font-weight:800;color:#f7f7f7;font-size:18px;margin:0;}
+.project-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;}
+.badge{background:var(--badge-bright);color:var(--badge-text);font-size:11px;padding:6px 10px;border-radius:12px;}
+.state{font-size:13px;color:rgba(255,255,255,0.7);font-weight:700;align-self:flex-start;padding:6px 10px;border-radius:10px;margin-top:8px;}
+.state.inprod{color:var(--orange);background:rgba(233,67,34,0.04);text-shadow:none;border:1px solid rgba(233,67,34,0.06);}
+.state.available{color:#0b3a0b;background:rgba(0,128,0,0.06);border:1px solid rgba(0,128,0,0.08);}
+
+/* hidden style used when filtering */
+.is-hidden{
+  pointer-events:none;
+  opacity:0;
+  transform:scale(0.97);
+}
+
+/* FLIP animation helper class */
+.flip-anim{
+  transition:transform .45s var(--ease),opacity .28s var(--ease);
+}
+
+/* SEPARATOR & FOOTER */
+.section-separator{width:60%;height:1px;background:rgba(255,255,255,0.12);margin:64px auto 0;border-radius:2px;}
+.footer{background:var(--orange);color:#0b0b0b;padding:36px 24px;text-align:center;}
+.footer-inner{max-width:var(--max-width);margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:12px;}
+.footer-logo{width:160px;height:56px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:"Satoshi User";font-weight:700;color:#0b0b0b;text-transform:uppercase;letter-spacing:1px;overflow:hidden;transform-origin:center;}
+.footer-logo img{height:48px;transition:transform .22s var(--ease);}
+.footer-logo a:hover img{transform:scale(1.06) translateY(-3px);}
+.footer-icons{display:flex;gap:18px;margin-top:8px;}
+.footer-icons a{color:#0b0b0b;font-size:20px;text-decoration:none;transition:opacity .2s;}
+.footer-icons a:hover{opacity:0.6;}
+.footer small{font-size:12px;color:rgba(0,0,0,0.6);}
+
+/* small utility */
+.visually-hidden{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap;}
+
+/* Responsive tweaks */
+@media (max-width:900px){
+  .hero-inner{flex-direction:column;align-items:center;text-align:center;gap:12px;}
+  .hero-left{flex-direction:column;align-items:center;gap:12px;}
+  .hero-right{margin-top:6px;position:relative;top:auto;right:auto;align-items:center;}
+  .hero-photo{width:calc(var(--hero-title-size) * 1.2);height:calc(var(--hero-title-size) * 1.2);flex:0 0 calc(var(--hero-title-size) * 1.2);}
+  .hero-title{font-size:calc(var(--hero-title-size) * 1.2);white-space:normal;text-align:center;}
+  .social-column{height:calc(var(--hero-title-size) * 1.2);flex-direction:row;gap:12px;justify-content:center;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" role="banner">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <!-- PROFILE PHOTO (top aligned to title top; height equals scaled title height) -->
+      <div class="hero-photo" id="heroPhoto" style="background-image:url('PortZS.png');" aria-hidden="true"></div>
+
+      <div>
+        <!-- SINGLE-ROW TITLE SCALED -->
+        <h1 class="hero-title">ZSOMBOR NAGY</h1>
+        <p class="hero-meta">Cinematographer · Colorist · Writer · Director</p>
+
+        <div class="hero-cta" style="margin-top:8px;">
+          <button class="btn btn-primary" type="button" onclick="document.querySelector('#work').scrollIntoView({behavior:'smooth'})">See work</button>
+          <!-- replaced Parallax with "Get in touch" as requested -->
+          <button class="btn btn-secondary" id="emailBtnTop" type="button" title="Get in touch">Get in touch</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<main id="work" class="projects" tabindex="-1" role="main" aria-labelledby="work-heading">
+  <div class="projects-inner">
+    <h2 id="work-heading" class="projects-title">Work</h2>
+
+    <!-- selector -->
+    <div class="work-selector-wrap" aria-hidden="false">
+      <div class="work-selector" id="selector">
+        <div class="slider" id="selector-slider" aria-hidden="true"></div>
+        <button class="sel-btn" data-filter="all" aria-pressed="true">ALL</button>
+        <button class="sel-btn" data-filter="cinematographer">CINEMATOGRAPHER</button>
+        <button class="sel-btn" data-filter="colorist">COLORIST</button>
+        <button class="sel-btn" data-filter="writer">WRITER</button>
+        <button class="sel-btn" data-filter="director">DIRECTOR</button>
+      </div>
+    </div>
+
+    <!-- projects grid -->
+    <div class="project-grid" id="projectGrid">
+
+      <!-- Cards: file names --> 
+
+      <a class="project-card" href="https://youtu.be/HH4_8Hf7q78" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="kiralycsel">
+        <div class="project-poster" style="background-image:url('kiralycsel.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Királycsel</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,writer,colorist" data-category="short film" data-state="in production" data-name="butterfly">
+        <div class="project-poster" style="background-image:url('butterfly.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Butterfly</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Writer · Colorist</div>
+          </div>
+          <div class="state inprod">In production</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,writer,director,colorist" data-category="short film" data-state="in production" data-name="otherplaces">
+        <div class="project-poster" style="background-image:url('otherplaces.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Other Places</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Writer · Director · Colorist</div>
+          </div>
+          <div class="state inprod">In production</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="colorist" data-category="commercial" data-state="available" data-name="lumierecommercial">
+        <div class="project-poster" style="background-image:url('lumierecommercial.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Lumiere Commercial</h3>
+            <div class="project-meta">
+              <span class="badge">COMMERCIAL</span>
+            </div>
+            <div class="roles">Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,writer,director,colorist" data-category="short film" data-state="available" data-name="soundofsilence">
+        <div class="project-poster" style="background-image:url('soundofsilence.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Sound of Silence</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Writer · Director · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="writer,colorist,cinematographer" data-category="feature film" data-state="coming soon" data-name="scissors">
+        <div class="project-poster" style="background-image:url('scissors.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Scissors</h3>
+            <div class="project-meta">
+              <span class="badge">FEATURE</span>
+            </div>
+            <div class="roles">Writer · Colorist · Cinematographer</div>
+          </div>
+          <div class="state">Coming soon</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="writer,director,cinematographer,colorist" data-category="feature film" data-state="coming soon" data-name="19metersoficecoldwater">
+        <div class="project-poster" style="background-image:url('19metersoficecoldwater.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">19 Meters of Ice-cold Water</h3>
+            <div class="project-meta">
+              <span class="badge">FEATURE</span>
+            </div>
+            <div class="roles">Writer · Director · Cinematographer · Colorist</div>
+          </div>
+          <div class="state">Coming soon</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="#" target="_blank" rel="noopener noreferrer"
+         data-roles="writer,cinematographer,colorist" data-category="short film" data-state="in production" data-name="gatewaydrug">
+        <div class="project-poster" style="background-image:url('gatewaydrug.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Gateway Drug</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Writer · Cinematographer · Colorist</div>
+          </div>
+          <div class="state inprod">In production</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/umzQFP7E0X0" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="missingperson">
+        <div class="project-poster" style="background-image:url('missingperson.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Missing person</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/_aFHLQ5UgRU" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="baba">
+        <div class="project-poster" style="background-image:url('baba.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Baba</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/VrxvIIyxhAA" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="loveable">
+        <div class="project-poster" style="background-image:url('loveable.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Loveable</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/jsyEXHc4_8M" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer,colorist" data-category="short film" data-state="available" data-name="messy">
+        <div class="project-poster" style="background-image:url('messy.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Messy</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer · Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/nyKgDiAxMeI" target="_blank" rel="noopener noreferrer"
+         data-roles="colorist" data-category="short film" data-state="available" data-name="phertekintroductionmusicvideo">
+        <div class="project-poster" style="background-image:url('phertekintroductionmusicvideo.png');"></div>
+        <div class="project-info">
+          <div>
+            <!-- removed dash from title -->
+            <h3 class="project-title">PH érték Intro</h3>
+            <div class="project-meta">
+              <span class="badge">MUSIC VIDEO</span>
+            </div>
+            <div class="roles">Colorist</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/gSZqLmyROFE" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer" data-category="commercial" data-state="available" data-name="qualityimpactcommercial">
+        <div class="project-poster" style="background-image:url('qualityimpactcommercial.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Quality Impact Commercial</h3>
+            <div class="project-meta">
+              <span class="badge">COMMERCIAL</span>
+            </div>
+            <div class="roles">Cinematographer</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://youtu.be/zR819C3JtVw" target="_blank" rel="noopener noreferrer"
+         data-roles="cinematographer" data-category="short film" data-state="available" data-name="blikkzur">
+        <div class="project-poster" style="background-image:url('blikkzur.png');"></div>
+        <div class="project-info">
+          <div>
+            <h3 class="project-title">Blikkzűr</h3>
+            <div class="project-meta">
+              <span class="badge">SHORT FILM</span>
+            </div>
+            <div class="roles">Cinematographer</div>
+          </div>
+          <div class="state available">Available</div>
+        </div>
+      </a>
+
+    </div><!-- /project-grid -->
+  </div>
+</main>
+
+<div class="section-separator"></div>
+
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <a href="a/index.html" title="Parallax Pictures" aria-label="Parallax Pictures homepage"><img src="sad.png" alt="Parallax Pictures logo"></a>
+    </div>
+    <!-- footer socials removed as requested -->
+    <small>© 2025 Parallax Pictures. All rights reserved.</small>
+  </div>
+</footer>
+
+<script>
+/* -----------------------
+  email: obfuscated (not printed plainly in HTML)
+   - clicking email icon or footer email opens mailto
+-------------------------*/
+(function(){
+  // base64 encoded email to avoid plain text in HTML
+  const b64 = "bmFneS56c21ib3IyMDA4QGdtYWlsLmNvbQ=="; // base64 for "nagy.zsombor2008@gmail.com"
+  function openMail(){
+    const email = atob(b64);
+    window.location.href = "mailto:" + email;
+  }
+  // top button
+  const top = document.getElementById('emailBtnTop');
+  if(top) top.addEventListener('click', openMail);
+  // side icon
+  const side = document.getElementById('emailBtn');
+  if(side) side.addEventListener('click', openMail);
+  // footer (if present)
+  const footerMail = document.getElementById('mailFooter');
+  if(footerMail) footerMail.addEventListener('click', function(e){ e.preventDefault(); openMail(); });
+
+})();
+
+/* -----------------------
+  Selector slider + FLIP filtering
+-------------------------*/
+(function(){
+  const selector = document.getElementById('selector');
+  const slider = document.getElementById('selector-slider');
+  const buttons = Array.from(selector.querySelectorAll('.sel-btn'));
+  const grid = document.getElementById('projectGrid');
+  const cards = Array.from(grid.children);
+
+  // place the slider under the active button
+  function placeSliderTo(btn, instant){
+    const rect = selector.getBoundingClientRect();
+    const bRect = btn.getBoundingClientRect();
+    const left = bRect.left - rect.left + 6;
+    const width = bRect.width;
+    slider.style.width = (width) + 'px';
+    slider.style.transform = 'translateX(' + left + 'px)';
+    if(instant){
+      slider.style.transition = 'none';
+      requestAnimationFrame(()=> slider.style.transition = '');
+    }
+  }
+
+  // initialize slider on load
+  placeSliderTo(buttons[0], true);
+  buttons[0].classList.add('active');
+
+  function normalizeRole(r){ return r.trim().toLowerCase(); }
+
+  function applyFilter(filter){
+    // record first rects
+    const firstRects = new Map();
+    cards.forEach(c => { firstRects.set(c, c.getBoundingClientRect()); });
+
+    // update active styles
+    buttons.forEach(b=>{
+      const isActive = (b.dataset.filter === filter);
+      b.classList.toggle('active', isActive);
+      b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+
+    const activeBtn = buttons.find(b => b.dataset.filter === filter) || buttons[0];
+    placeSliderTo(activeBtn, false);
+
+    // show/hide cards
+    cards.forEach(card=>{
+      const roles = (card.dataset.roles || '').split(',').map(normalizeRole);
+      const match = filter === 'all' || roles.includes(filter);
+      card.classList.toggle('is-hidden', !match);
+    });
+
+    // force reflow
+    grid.offsetHeight;
+
+    // record last rects
+    const lastRects = new Map();
+    cards.forEach(c => { lastRects.set(c, c.getBoundingClientRect()); });
+
+    // animate via FLIP
+    cards.forEach(card=>{
+      const first = firstRects.get(card);
+      const last = lastRects.get(card);
+      if(!first || !last) return;
+      const dx = first.left - last.left;
+      const dy = first.top - last.top;
+      const dw = first.width / last.width;
+      const dh = first.height / last.height;
+      if(dx===0 && dy===0 && dw===1 && dh===1) return;
+      card.style.transition = 'none';
+      card.style.transformOrigin = 'top left';
+      card.style.transform = `translate(${dx}px, ${dy}px) scale(${dw}, ${dh})`;
+      requestAnimationFrame(()=>{
+        card.classList.add('flip-anim');
+        card.style.transition = '';
+        card.style.transform = '';
+        const onEnd = (ev)=>{
+          card.classList.remove('flip-anim');
+          card.style.transition = '';
+          card.removeEventListener('transitionend', onEnd);
+        };
+        card.addEventListener('transitionend', onEnd);
+      });
+    });
+  }
+
+  // attach click handlers
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      applyFilter(btn.dataset.filter);
+    });
+  });
+
+  // initialize
+  applyFilter('all');
+
+  // keyboard navigation
+  selector.addEventListener('keydown', (e)=>{
+    const idx = buttons.findIndex(b => b.classList.contains('active'));
+    if(e.key === 'ArrowRight'){ buttons[(idx+1)%buttons.length].focus(); buttons[(idx+1)%buttons.length].click(); }
+    if(e.key === 'ArrowLeft'){ buttons[(idx-1+buttons.length)%buttons.length].focus(); buttons[(idx-1+buttons.length)%buttons.length].click(); }
+  });
+
+  // reposition slider on resize
+  let rt;
+  window.addEventListener('resize', ()=>{
+    clearTimeout(rt);
+    rt = setTimeout(()=> {
+      const active = buttons.find(b=> b.classList.contains('active')) || buttons[0];
+      placeSliderTo(active, true);
+      const currentFilter = active.dataset.filter || 'all';
+      applyFilter(currentFilter);
+    }, 120);
+  });
+
+})();
+</script>
+</body>
+</html>
